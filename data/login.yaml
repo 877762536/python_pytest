@@ -1,0 +1,14 @@
+---
+tests:
+- case: 验证获取验证码功能
+  http:
+    method: GET
+    path: /User/v1/Login/GetVerificationCode
+    headers:
+      User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+    params:
+      mobile: 18200000000
+      code_type: VERIFICATION_CODE_LOGIN
+  expected:
+    response:
+      code: "0"
