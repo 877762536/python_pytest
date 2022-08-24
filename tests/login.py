@@ -10,13 +10,6 @@ import os
 
 host = "https://dev-api.qipei-tong.com"
 
-
-@pytest.fixture
-def my_fixture():
-    print("111")
-    yield
-    print("222")
-
 def get_test_data(test_data_path):
     case = []  # 存储测试用例名称
     http = []  # 存储请求对象
@@ -36,8 +29,9 @@ cases, parameters = get_test_data("/data/login.yaml")
 list_params=list(parameters)
 
 class TestInTheaters(object):
-    def test_in_theaters(self):
-        http_rsp = http_client.send_get(host+list_params[0][1]["path"], list_params[0][1]["params"])
+    @pytest.mark.parametrize("case,http,expected", list(list_params), ids=cases)
+    def test_in_theaters(self, case, http, expected):
+        http_rsp = http_client.send_get(host+http["path"], http["params"])
         print(http_rsp.json())
-        assert http_rsp.json()["code"] == list_params[0][2]['response']['code']
+        assert http_rsp.json()["code"] == expected['response']['code']
         #assert http_rsp.json()["msg"] == "60s内不可重新发送。"

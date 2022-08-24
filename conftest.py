@@ -1,3 +1,9 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+aa = {"aa":1,"bb":2,"cc":3}
+a,b,c = list(aa)
+
+print(a)
+print(b)
+print(c)
