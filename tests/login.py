@@ -27,7 +27,7 @@ list_params=list(parameters)
 
 class TestInTheaters(object):
     @pytest.mark.parametrize("case,http,expected", list(list_params), ids=cases)
-    def test_in_theaters(self, dologin,env, case, http, expected):
+    def test_in_theaters(self,env, case, http, expected):
         print(env["host"])
         http_rsp = http_client.send_get(env["host"]+http["path"], http["params"])
         print(http_rsp.json())
