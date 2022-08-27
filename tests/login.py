@@ -8,8 +8,6 @@ import json
 import yaml
 import os
 
-host = "https://dev-api.qipei-tong.com"
-
 def get_test_data(test_data_path):
     case = []  # 存储测试用例名称
     http = []  # 存储请求对象
@@ -24,14 +22,14 @@ def get_test_data(test_data_path):
             expected.append(td.get('expected', {}))
     parameters = zip(case, http, expected)
     return case, parameters
-
 cases, parameters = get_test_data("/data/login.yaml")
 list_params=list(parameters)
 
 class TestInTheaters(object):
     @pytest.mark.parametrize("case,http,expected", list(list_params), ids=cases)
-    def test_in_theaters(self, case, http, expected):
-        http_rsp = http_client.send_get(host+http["path"], http["params"])
+    def test_in_theaters(self, dologin,env, case, http, expected):
+        print(env["host"])
+        http_rsp = http_client.send_get(env["host"]+http["path"], http["params"])
         print(http_rsp.json())
         assert http_rsp.json()["code"] == expected['response']['code']
         #assert http_rsp.json()["msg"] == "60s内不可重新发送。"
